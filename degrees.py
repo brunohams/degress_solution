@@ -106,16 +106,17 @@ def shortest_path(source, target):
         # Choose a node from frontier
         node = frontier.remove()
 
-        # Check to see if is the goal
-        if node.state == target:
-            actions_cells = []
-            while node.parent is not None:
-                actions_cells.append((node.action, node.state))
-                node = node.parent
-            return actions_cells
-
         # Mark as explored node
         explored.add(node.state)
+        
+        # Check to see if is the goal
+        if node.state == target:
+            path = []
+            while node.parent is not None:
+                path.append((node.action, node.state))
+                node = node.parent
+            path.reverse()
+            return path
 
         # Add neighbors to frontier
         for action, state in neighbors_for_person(node.state):
